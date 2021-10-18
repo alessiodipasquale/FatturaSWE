@@ -1,0 +1,72 @@
+<div class="row" style="padding: 2%;">
+  <div class="col-9">
+    <h1>Benvenuto nel programma di fatturazione</h1>
+  </div>
+  <div class="col-3" style="display: flex; align-items: center; justify-content: center;">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{language === '' ? 'Scegli Lingua' : language}}</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button (click)="selectLang('IT')" ngbDropdownItem>IT</button>
+        <button (click)="selectLang('UK')" ngbDropdownItem>UK</button>
+        <button (click)="selectLang('CZ')" ngbDropdownItem>CZ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin:0 2%">
+  <div class="card-body" >
+    <form>
+    <div class="row mb-3">
+      <div class="col-4">
+        <label for="exampleInputEmail1">Nome oggetto</label>
+        <input name="name" [(ngModel)]="object.name" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Inserisci nome oggetto">
+      </div>
+      <div class="col-4">
+        <label for="exampleInputEmail1">Quantità</label>
+        <input name="quantity" [(ngModel)]="object.quantity" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Inserisci quantità oggetto">
+      </div>
+      <div class="col-4">
+        <label for="exampleInputEmail1">Prezzo unitario</label>
+        <input name="price" [(ngModel)]="object.price" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Inserisci prezzo unitario">
+      </div>
+     
+    </div>
+  </form>
+    <button class="btn btn-success btn-block" (click)="add()">Aggiungi</button>
+  </div>
+ 
+</div>
+
+<div class="card" style="margin: 2%;" *ngIf="objectList.length !== 0">
+  <div class="card-header">
+    Carrello
+  </div>
+  <div class="card-body">
+    <div class="card mb-3" *ngFor="let object of objectList; let i = index">
+      <div class="row" style="padding: 2%">
+      <h3 class="col-4">
+        Nome: {{object.name}}, Quantità:{{object.quantity}}, Prezzo:{{object.price}}
+      </h3>
+      <div class="col-4" style="display: flex;">
+        <button class="btn btn-danger"(click)="delete(i)" >Cancella</button>
+      </div>
+
+      <div class="col-4" *ngIf="showPrice" style="display: flex; align-items: center; justify-content: center;">
+        Prezzo parziale oggetto: {{object.quantity * object.price}}
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary btn-block" (click)="sum()" >Calcola</button>
+  </div>
+</div>
+
+
+<div class="card" *ngIf="showPrice">
+  <div class="card-body">
+    Il prezzo totale senza IVA è: {{price}}<br>
+    Il prezzo totale con IVA è: {{ivaPrice}}
+  </div>
+</div>
